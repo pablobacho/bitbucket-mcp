@@ -410,7 +410,7 @@ Lists comments on a pull request.
 
 #### `addPullRequestComment`
 
-Creates a comment on a pull request (general or inline).
+Creates a comment on a pull request (general or inline), optionally as a threaded reply to an existing comment.
 
 **Parameters:**
 
@@ -418,6 +418,8 @@ Creates a comment on a pull request (general or inline).
 - `repo_slug`: Repository slug
 - `pull_request_id`: Pull request ID
 - `content`: Comment content in markdown format
+- `parent_comment_id` (optional): Bitbucket comment id to reply to (from `getPullRequestComments` or `getPullRequestComment`)
+- `pending` (optional): Create as a pending (draft) comment
 - `inline` (optional): Inline comment information for commenting on specific lines
 
 **Inline Comment Format:**
@@ -450,6 +452,17 @@ addPullRequestComment(workspace, repo, pr_id, "Consider error handling here", {
   path: "src/service.ts",
   to: 25,
 });
+
+// Reply in an existing thread (pass parent_comment_id from list/get comments; optional args shown when skipping inline and pending)
+addPullRequestComment(
+  workspace,
+  repo,
+  pr_id,
+  "Thanks, updated.",
+  undefined,
+  undefined,
+  "12345"
+);
 ```
 
 #### `getPullRequestComment`
